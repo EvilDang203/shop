@@ -21,42 +21,4 @@ import java.util.Optional;
 @AllArgsConstructor
 @Api(tags = "Order")
 public class OrderController {
-    @Autowired private final OrderService orderService;
-
-    @PostMapping("/")
-    @ApiOperation("Create")
-    public Order create(@Valid @RequestBody CreateOrderReq req) {
-        return orderService.create(req);
-    }
-
-    @GetMapping("")
-    @ApiOperation("Find All")
-    public ApiResponse<Order> findAll(@ModelAttribute OrderFilter filter){
-        Page<Order> pageResult = orderService.findAll(filter);
-        ApiResponse<Order> response = new ApiResponse<>();
-        response.setItems(pageResult.getContent());
-        response.setTotal(pageResult.getTotalElements());
-        response.setSize(pageResult.getSize());
-        response.setPage(pageResult.getNumber());
-
-        return response;
-    }
-
-    @GetMapping("/{id}")
-    @ApiOperation("Get one")
-    public Optional<Order> findById(@PathVariable Long id){
-        return orderService.findById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    @ApiOperation("Delete")
-    public void delete(@PathVariable Long id){
-        orderService.delete(id);
-    }
-
-    @PutMapping("/{id}")
-    @ApiOperation("Update")
-    public Order partialUpdate(@PathVariable Long id, @RequestBody UpdateOrderReq req){
-        return orderService.partialUpdate(id, req);
-    }
 }
