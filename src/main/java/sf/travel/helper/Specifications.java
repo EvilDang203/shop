@@ -39,4 +39,14 @@ public abstract class Specifications<T> {
             }
         };
     }
+
+    public Specification<T> findByNumberRange(String field, int min, int max) {
+        return (root, query, builder) -> {
+            if (min >= 0 && max >= 0 && min <= max) {
+                return  builder.between(root.get(field), min, max);
+            } else {
+                return null;
+            }
+        };
+    }
 }

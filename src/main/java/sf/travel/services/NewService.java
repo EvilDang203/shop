@@ -68,7 +68,7 @@ public class NewService {
 
             return newRepo.save(newUpdate);
         } else {
-            throw new ConflictError(ErrorCode.DAT_09);
+            throw new ConflictError(ErrorCode.NEW_NOT_FOUND);
         }
     }
 

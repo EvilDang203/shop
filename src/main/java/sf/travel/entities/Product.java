@@ -5,38 +5,42 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import sf.travel.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<OrderItem> items;
+    @Column
+    private String name;
 
     @Column
     private String description;
 
     @Column
-    private int totalCost;
+    private String image;
+
+    @Column
+    private int price;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private UserInfo customer;
+    @JoinColumn(name = "created_by")
+    private UserInfo createdBy;
 
-    @Enumerated(EnumType.STRING)
-    @Column
-    private Status status;
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private UserInfo updatedBy;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
