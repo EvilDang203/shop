@@ -9,14 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import sf.travel.entities.Category;
-import sf.travel.entities.New;
 import sf.travel.entities.UserInfo;
 import sf.travel.errors.ConflictError;
 import sf.travel.errors.ErrorCode;
 import sf.travel.helper.specifications.CategorySpec;
-import sf.travel.helper.specifications.NewSpec;
 import sf.travel.repositories.CategoryRepository;
-import sf.travel.repositories.NewRepository;
 import sf.travel.repositories.UserInfoRepository;
 import sf.travel.rests.types.*;
 
@@ -45,7 +42,7 @@ public class CategoryService {
         return categoryRepository.save(newPage);
     }
 
-    public Page<Category> findAll(NewFilter filter){
+    public Page<Category> findAll(CategoryFilter filter){
         Specification<Category> spec = null;
         if (filter.getName() != null) {
             spec = categorySpec.createSpecification("name", filter.getName());

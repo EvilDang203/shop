@@ -5,6 +5,6 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class NewFilter extends PaginationParams{
+public class CategoryFilter  extends PaginationParams{
     private String name;
 }

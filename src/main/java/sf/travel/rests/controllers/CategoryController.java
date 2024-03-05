@@ -6,35 +6,32 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-import sf.travel.entities.Travel;
-import sf.travel.rests.types.ApiResponse;
-import sf.travel.rests.types.CreateTravelReq;
-import sf.travel.rests.types.TravelFilter;
-import sf.travel.rests.types.UpdateTravelReq;
-import sf.travel.services.TravelService;
+import sf.travel.entities.Category;
+import sf.travel.rests.types.*;
+import sf.travel.services.CategoryService;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/travels")
+@RequestMapping("/categories")
 @AllArgsConstructor
-@Api(tags = "Travel")
-public class TravelController {
+@Api(tags = "Category")
+public class CategoryController {
     @Autowired
-    private final TravelService travelService;
+    private final CategoryService categoryService;
 
     @PostMapping("/")
     @ApiOperation("Create")
-    public Travel create(@Valid @RequestBody CreateTravelReq req) {
-        return travelService.create(req);
+    public Category create(@Valid @RequestBody CreateCategoryReq req) {
+        return categoryService.create(req);
     }
 
     @GetMapping("")
     @ApiOperation("Find All")
-    public ApiResponse<Travel> findAll(@ModelAttribute TravelFilter filter){
-        Page<Travel> pageResult = travelService.findAll(filter);
-        ApiResponse<Travel> response = new ApiResponse<>();
+    public ApiResponse<Category> findAll(@ModelAttribute CategoryFilter filter){
+        Page<Category> pageResult = categoryService.findAll(filter);
+        ApiResponse<Category> response = new ApiResponse<>();
         response.setItems(pageResult.getContent());
         response.setTotal(pageResult.getTotalElements());
         response.setSize(pageResult.getSize());
@@ -45,19 +42,19 @@ public class TravelController {
 
     @GetMapping("/{id}")
     @ApiOperation("Get one")
-    public Optional<Travel> findById(@PathVariable Long id){
-        return travelService.findById(id);
+    public Optional<Category> findById(@PathVariable Long id){
+        return categoryService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("Delete")
     public void delete(@PathVariable Long id){
-        travelService.delete(id);
+        categoryService.delete(id);
     }
 
     @PutMapping("/{id}")
     @ApiOperation("Update")
-    public Travel partialUpdate(@PathVariable Long id, @RequestBody UpdateTravelReq req){
-        return travelService.partialUpdate(id, req);
+    public Category partialUpdate(@PathVariable Long id, @RequestBody UpdateCategoryReq req){
+        return categoryService.partialUpdate(id, req);
     }
 }

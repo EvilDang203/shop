@@ -30,10 +30,6 @@ public class Order {
     @Column
     private int totalCost;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private UserInfo customer;
-
     @Enumerated(EnumType.STRING)
     @Column
     private Status status;
