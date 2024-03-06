@@ -10,5 +10,4 @@ public class UpdateProductReq {
     private int price = -1;
     private String description;
     private String image;
-
 }

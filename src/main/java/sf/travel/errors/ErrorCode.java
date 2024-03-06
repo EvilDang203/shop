@@ -8,7 +8,7 @@ public enum ErrorCode {
     TRAVEL_NOT_FOUND(404, "Travel not found"),
     CUSTOMER_NOT_FOUND(404, "Customer not found"),
     HIGHLIGHT_NOT_FOUND(404, "Highlight not found"),
-    NEW_NOT_FOUND(404, "New not found"),
+    USERINFO_NOT_FOUND(404, "New not found"),
     ORDER_NOT_FOUND(404, "Order not found"),
     PROMOTION_NOT_FOUND(404, "Promotion not found"),
     HOTEL_NOT_FOUND(404, "Hotel not found"),
