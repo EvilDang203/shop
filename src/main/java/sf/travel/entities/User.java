@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "users")
 public class User {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +24,6 @@ public class User {
 
         @Column
         private String password;
-
-        @OneToOne
-        @JoinColumn(name = "userInfo_id")
-        private UserInfo userInfo;
 
         @CreationTimestamp
         @Column(updatable = false, name = "created_at")

@@ -1,6 +1,7 @@
 package sf.travel.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sf.travel.entities.User;
@@ -16,12 +17,12 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class AuthService {
-    private final UserRepository userRepository;
-    private final UserInfoRepository userInfoRepository;
+    @Autowired private final UserRepository userRepository;
+    @Autowired private final UserInfoRepository userInfoRepository;
 
     public void registerUser(CreateRegisterReq request) {
         // Kiểm tra xem username đã tồn tại chưa
-        Optional<User> optionalUser = userRepository.findByUserName(request.getUsername());
+        Optional<User> optionalUser = userRepository.findByUserName(request.getUserName());
 
         if (optionalUser.isPresent()) {
             throw new ConflictError(ErrorCode.USERNAME_AVAILABLE);
@@ -29,7 +30,7 @@ public class AuthService {
 
         // Tạo một User mới
         User user = new User();
-        user.setUserName(request.getUsername());
+        user.setUserName(request.getUserName());
         user.setPassword(request.getPassword());
 
         // Lưu thông tin User
@@ -57,11 +58,11 @@ public class AuthService {
             // Kiểm tra mật khẩu
             if (user.getPassword().equals(password)) {
                 // Nếu mật khẩu đúng, đăng nhập thành công
-                return "dang nhap thanh cong";
+                return "success";
             }
         }
 
         // Nếu không tìm thấy người dùng hoặc mật khẩu không đúng, trả về thông báo lỗi
-        return "sai tên tài khoản hoặc mật khẩu";
+        return "wrong account name or password";
     }
 }

@@ -6,7 +6,7 @@ import sf.travel.enums.UserType;
 @Data
 
 public class CreateRegisterReq {
-    private String username;
+    private String userName;
     private String password;
     private String name;
     private String email;
