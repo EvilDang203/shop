@@ -11,6 +11,8 @@ import sf.travel.repositories.UserInfoRepository;
 import sf.travel.repositories.UserRepository;
 import sf.travel.rests.types.CreateRegisterReq;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AuthService {
@@ -19,7 +21,9 @@ public class AuthService {
 
     public void registerUser(CreateRegisterReq request) {
         // Kiểm tra xem username đã tồn tại chưa
-        if (userRepository.existsByUsername(request.getUsername())) {
+        Optional<User> optionalUser = userRepository.findByUserName(request.getUsername());
+
+        if (optionalUser.isPresent()) {
             throw new ConflictError(ErrorCode.USERNAME_AVAILABLE);
         }
 
@@ -43,15 +47,21 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public String login(String username, String password) {
-        // Tìm kiếm người dùng theo username và password
-        User user = userRepository.findByUsernameAndPassword(username, password);
+    public String login(String userName, String password) {
+        // Tìm kiếm người dùng theo username
+        Optional<User> optionalUser = userRepository.findByUserName(userName);
 
-        // Nếu người dùng tồn tại, đăng nhập thành công
-        if (user != null) {
-            return "dang nhap thanh cong";
-        } else {
-            return "sai tên tài khoản hoặc mật khẩu";
+        // Kiểm tra xem người dùng có tồn tại không
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Kiểm tra mật khẩu
+            if (user.getPassword().equals(password)) {
+                // Nếu mật khẩu đúng, đăng nhập thành công
+                return "dang nhap thanh cong";
             }
+        }
+
+        // Nếu không tìm thấy người dùng hoặc mật khẩu không đúng, trả về thông báo lỗi
+        return "sai tên tài khoản hoặc mật khẩu";
     }
 }

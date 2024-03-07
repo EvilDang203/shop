@@ -24,9 +24,9 @@ public class User {
         @Column
         private String password;
 
-//        @OneToOne
-//        @JoinColumn(name = "userInfo_id")
-//        private UserInfo userInfo;
+        @OneToOne
+        @JoinColumn(name = "userInfo_id")
+        private UserInfo userInfo;
 
         @CreationTimestamp
         @Column(updatable = false, name = "created_at")
