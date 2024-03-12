@@ -22,7 +22,7 @@ public class AuthService {
 
     public void registerUser(CreateRegisterReq request) {
         // Kiểm tra xem username đã tồn tại chưa
-        Optional<User> optionalUser = userRepository.findByUserName(request.getUserName());
+        Optional<User> optionalUser = userRepository.findByUsername(request.getUsername());
 
         if (optionalUser.isPresent()) {
             throw new ConflictError(ErrorCode.USERNAME_AVAILABLE);
@@ -30,7 +30,7 @@ public class AuthService {
 
         // Tạo một User mới
         User user = new User();
-        user.setUserName(request.getUserName());
+        user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
 
         // Lưu thông tin User
@@ -48,9 +48,9 @@ public class AuthService {
     }
 
     @Transactional(readOnly = true)
-    public String login(String userName, String password) {
+    public String login(String username, String password) {
         // Tìm kiếm người dùng theo username
-        Optional<User> optionalUser = userRepository.findByUserName(userName);
+        Optional<User> optionalUser = userRepository.findByUsername(username);
 
         // Kiểm tra xem người dùng có tồn tại không
         if (optionalUser.isPresent()) {

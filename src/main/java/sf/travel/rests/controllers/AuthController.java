@@ -34,9 +34,9 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation("User Login")
-    public ResponseEntity<String> login(@RequestParam String userName, @RequestParam String password) {
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
         try {
-            String result = authService.login(userName, password);
+            String result = authService.login(username, password);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Login failed: " + e.getMessage());
